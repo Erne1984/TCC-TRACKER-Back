@@ -1,6 +1,6 @@
-package com.floriano.login_system_backend_maven.repositories;
+package com.floriano.com.floriano.tcc_tracker_api.repositories;
 
-import com.floriano.login_system_backend_maven.domain.user.User;
+import com.floriano.com.floriano.tcc_tracker_api.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

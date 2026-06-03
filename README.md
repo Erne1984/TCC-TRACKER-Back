@@ -1,4 +1,4 @@
-#  Spring Security API Template
+# TCC Tracker API
 
 Pequeno template de API REST em **Java 17** que demonstra autenticação e autorização
 usando **Spring Boot 3**, **Spring Security** e **JWT**.  

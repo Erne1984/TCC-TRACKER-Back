@@ -1,4 +1,4 @@
-package com.floriano.login_system_backend_maven.domain.user;
+package com.floriano.com.floriano.tcc_tracker_api.domain.user;
 
 import jakarta.persistence.*;
 import lombok.*;

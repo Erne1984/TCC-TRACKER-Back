@@ -1,6 +1,6 @@
-package com.floriano.login_system_backend_maven.services;
+package com.floriano.com.floriano.tcc_tracker_api.services;
 
-import com.floriano.login_system_backend_maven.repositories.UserRepository;
+import com.floriano.com.floriano.tcc_tracker_api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

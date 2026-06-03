@@ -1,4 +1,4 @@
-package com.floriano.login_system_backend_maven;
+package com.floriano.com.floriano.tcc_tracker_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

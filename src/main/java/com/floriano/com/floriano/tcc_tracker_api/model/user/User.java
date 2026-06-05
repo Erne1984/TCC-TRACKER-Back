@@ -1,4 +1,4 @@
-package com.floriano.com.floriano.tcc_tracker_api.domain.user;
+package com.floriano.com.floriano.tcc_tracker_api.model.user;
 
 import jakarta.persistence.*;
 import lombok.*;

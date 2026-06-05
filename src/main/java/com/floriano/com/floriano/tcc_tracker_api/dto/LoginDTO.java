@@ -1,0 +1,7 @@
+package com.floriano.com.floriano.tcc_tracker_api.dto;
+
+public record LoginDTO(
+        String email,
+        String password
+) {
+}

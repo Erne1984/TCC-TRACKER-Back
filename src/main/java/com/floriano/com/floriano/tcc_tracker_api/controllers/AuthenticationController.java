@@ -1,53 +1,65 @@
 package com.floriano.com.floriano.tcc_tracker_api.controllers;
 
-import com.floriano.com.floriano.tcc_tracker_api.domain.user.AutheticationDto;
-import com.floriano.com.floriano.tcc_tracker_api.domain.user.RegisterDto;
-import com.floriano.com.floriano.tcc_tracker_api.domain.user.User;
+import com.floriano.com.floriano.tcc_tracker_api.dto.LoginDTO;
+import com.floriano.com.floriano.tcc_tracker_api.dto.LoginResponseDTO;
+import com.floriano.com.floriano.tcc_tracker_api.dto.RegisterStudentDTO;
 import com.floriano.com.floriano.tcc_tracker_api.infra.security.TokenService;
-import com.floriano.com.floriano.tcc_tracker_api.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.floriano.com.floriano.tcc_tracker_api.model.user.User;
+import com.floriano.com.floriano.tcc_tracker_api.services.StudentService.StudentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final StudentService studentService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AutheticationDto data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<LoginResponseDTO> login(
+            @RequestBody LoginDTO data
+    ) {
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var usernamePassword =
+                new UsernamePasswordAuthenticationToken(
+                        data.email(),
+                        data.password()
+                );
 
-        return ResponseEntity.ok(token);
+        var authentication =
+                authenticationManager.authenticate(
+                        usernamePassword
+                );
+
+        User user = (User) authentication.getPrincipal();
+
+        String token = tokenService.generateToken(user);
+
+        return ResponseEntity.ok(
+                new LoginResponseDTO(token)
+        );
     }
 
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterDto data) {
+    @PostMapping("/register-student")
+    public ResponseEntity<LoginResponseDTO> registerStudent(
+            @RequestBody RegisterStudentDTO data
+    ) {
 
-        if(this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+        User user = studentService.register(data);
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword, data.role());
+        String token = tokenService.generateToken(user);
 
-        this.userRepository.save(newUser);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new LoginResponseDTO(token));
     }
 }

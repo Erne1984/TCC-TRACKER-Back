@@ -3,7 +3,7 @@ package com.floriano.com.floriano.tcc_tracker_api.infra.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.floriano.com.floriano.tcc_tracker_api.domain.user.User;
+import com.floriano.com.floriano.tcc_tracker_api.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

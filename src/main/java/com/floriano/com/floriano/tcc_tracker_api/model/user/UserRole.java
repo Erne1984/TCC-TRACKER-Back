@@ -1,8 +1,9 @@
-package com.floriano.com.floriano.tcc_tracker_api.domain.user;
+package com.floriano.com.floriano.tcc_tracker_api.model.user;
 
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    PROFESSOR("professor"),
+    STUDENT("student");
 
     private String role;
 
